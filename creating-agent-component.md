@@ -27,7 +27,7 @@ description: >-
   ```bash
   # ユーザー入力を分析
   # (エージェントが自律的に実行する場合)
-  view_file "c:/Users/Owner/CDD-Guideline/.agent/skills/agent_component_classifier/SKILL.md"
+  view_file "agent-component-classifier/SKILL.md"
   # Follow the instructions in SKILL.md to classify the input
   ```
 - **Manual Decision**:
