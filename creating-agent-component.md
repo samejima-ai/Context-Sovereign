@@ -27,7 +27,8 @@ description: >-
   ```bash
   # ユーザー入力を分析
   # (エージェントが自律的に実行する場合)
-  view_file "agent-component-classifier/SKILL.md"
+  # Standard path for Antigravity Global Skills
+  view_file "c:/Users/Owner/.gemini/antigravity/skills/agent-component-classifier/SKILL.md"
   # Follow the instructions in SKILL.md to classify the input
   ```
 - **Manual Decision**:

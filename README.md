@@ -1,35 +1,42 @@
 # Antigravity Global Workflows
 
-Antigravity エージェントのためのグローバルなワークフローとスキルを管理するリポジトリです。
-これらは、新しいエージェントコンポーネント（Rules, Skills, Workflows）を標準化された手順で生成するための「マスター」として機能します。
+Antigravity（アングラ）環境で使用される、汎用的なメタワークフローおよび共通スキルの集合体です。
 
-## 構成と配置場所 (File Placement)
+## 📁 ディレクトリ構成
 
-このリポジトリのファイルを、エージェントがグローバルに参照できる場所に配置してください。
+### 1. Workflows (`.gemini/antigravity/global_workflows/`)
 
-| ファイル/ディレクトリ         | 推奨配置場所                            | 内容                                 |
-| :---------------------------- | :-------------------------------------- | :----------------------------------- |
-| `creating-agent-component.md` | `.gemini/antigravity/global_workflows/` | **メガメタWF**: 生成プロセスの入り口 |
-| `creating-rules.md`           | `.gemini/antigravity/global_workflows/` | ルール (RL) 生成フロー               |
-| `creating-skills.md`          | `.gemini/antigravity/global_workflows/` | スキル (SK) 生成フロー               |
-| `creating-workflows.md`       | `.gemini/antigravity/global_workflows/` | ワークフロー (WF) 生成フロー         |
-| `agent-component-classifier/` | `.gemini/antigravity/global_workflows/` | 入力分類用スキル                     |
+エージェントが特定の目的（コンポーネント生成、リサーチ、レビューなど）を完遂するための、動的な手順書を格納します。
 
-> [!NOTE]
-> 現在、`agent-component-classifier` スキルは `global_workflows` 内に同居させています。これは、`creating-agent-component.md` からの相対パス参照を維持するためです。
+- **`creating-agent-component.md`**: RL/SK/WF 生成の統括エントリーポイント
+- **`creating-rules.md`**: Rules (RL) 生成フロー
+- **`creating-skills.md`**: Skills (SK) 生成フロー
+- **`creating-workflows.md`**: Workflows (WF) 生成フロー
 
-## 使い方 (Usage)
+### 2. Global Skills (`.gemini/antigravity/skills/`)
 
-新しいコンポーネントを作成したい場合、エージェントに以下のワークフローの実行を指示してください。
+エージェントが特定の能力として自動認識し、`view_file` 等で直接参照可能な「道具」を格納します。
+
+- **`agent-component-classifier/`**: ユーザー入力を分析し、最適な種別に分類する設計技師
+
+## ⚙️ セットアップ & ポータビリティ
+
+他のデバイスでこのスキルセットを有効にするには、以下のフォルダ構造に配置してください。
 
 ```bash
-/creating-agent-component
+# Windows
+%USERPROFILE%\.gemini\antigravity\skills\               # Global Skills 配置先
+%USERPROFILE%\.gemini\antigravity\global_workflows/     # Meta-Workflows 配置先
+
+# Unix (macOS/Linux)
+~/.gemini/antigravity/skills/
+~/.gemini/antigravity/global_workflows/
 ```
 
-または、直接ファイルの内容を読み込ませて開始します。
+## 🚀 使い方
 
-## 設計思想 (Design Philosophy)
+エージェントに対して「エージェントコンポーネントを作成して」などの関連するキーワードで依頼することで、自動的にこれらのグローバルワークフローがトリガーされます。
 
-- **CDD (Context-Driven Development)**: 実装（Script）の前に文脈（Context）を定義する。
-- **Modular & Atomic**: 各スキルは単一の責任を持ち、再利用可能であること。
-- **Standardized SOP**: 命名規則（kebab-case, verb-ing）や構造を厳格に守る。
+---
+
+© 2026 samejima-ai
