@@ -30,13 +30,9 @@ description: >-
 ### 2. Duplicate Check (重複確認)
 
 - **Action**: Search existing skills to prevent redundancy.
-  - Local: `.agent/skills/`
-  - Global: `~/.agent/skills/`
-- **Command**:
-
-  ```bash
-  fd <capability-name> .agent/skills ~/.agent/skills
-  ```
+  - Local: Project-level skills directory
+  - Global: Shared/Global skills directory
+- **Goal**: Check if the capability is already implemented in the environment.
 
 ### 3. Capability Scope (能力の定義)
 
@@ -66,8 +62,8 @@ description: >-
 
 - **Action**: Package the skill into `SKILL.md`.
 - **Placement Strategy**:
-  - **Default**: `<project-root>/.agent/skills/<capability-name>/SKILL.md` (Local)
-  - **Global Option**: `~/.agent/skills/<capability-name>/SKILL.md` (**Only if user specifies --global**)
+  - **Local**: Project-level skills directory
+  - **Global**: Shared/Global skills directory
 - **Constraint**: MUST use **YAML Frontmatter**.
 
 #### Template

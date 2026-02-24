@@ -26,7 +26,7 @@ description: >-
 - **Command**:
   ```bash
   # Analyze user input based on the classifier skill instructions
-  # Check ~/.gemini/antigravity/skills/agent-component-classifier/SKILL.md
+  # Check the standard path for the agent-component-classifier skill
   ```
 - **Manual Decision**:
   - Is it a **Rule (RL)**? (Constraint, Principle)

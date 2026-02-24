@@ -36,5 +36,5 @@
 
 ---
 
-_Codified by the Antigravity Agent_  
+_Codified by the Context Sovereign Agent_  
 _Approved by the Supreme Will of the User_

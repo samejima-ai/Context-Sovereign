@@ -2,7 +2,7 @@
 name: context-sovereign
 status: active
 version: 1.0.0
-description: CACAOシステムにおける「文脈の絶対君主」。コンポーネント作成の失敗を未然に防ぎ、CDD의 純度を保つ最上位スキルの指揮官。
+description: 統治システムにおける「文脈の絶対君主」。コンポーネント作成の失敗を未然に防ぎ、CDDの純度を保つ最上位スキルの指揮官。
 tags: [meta-orchestration, cdd, governance, agent-builder]
 ---
 

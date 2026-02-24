@@ -30,13 +30,9 @@ description: >-
 ### 2. Duplicate Check (重複確認)
 
 - **Action**: Search existing workflows to prevent redundancy.
-  - Local: `.agent/workflows/`
-  - Global: `~/.agent/workflows/`
-- **Command**:
-
-  ```bash
-  fd <verb-ing-action> .agent/workflows ~/.agent/workflows
-  ```
+  - Local: Project-level workflows directory
+  - Global: Shared/Global workflows directory
+- **Goal**: Scan current environment for similar process definitions.
 
 ### 3. Objective Alignment (目的の明確化)
 
@@ -62,8 +58,8 @@ description: >-
 
 - **Action**: Write the workflow document.
 - **Placement Strategy**:
-  - **Default**: `<project-root>/.agent/workflows/<verb-ing-action>.md` (Local)
-  - **Global Option**: `~/.agent/workflows/<verb-ing-action>.md` (**Only if user specifies --global**)
+  - **Local**: Project-level workflows directory
+  - **Global**: Shared/Global workflows directory
 - **Constraint**: MUST use **YAML Frontmatter**.
 
 #### Template
