@@ -1,16 +1,16 @@
 ---
-name: initialize-context-sovereign
+name: initializing-context-sovereign
 status: active
 version: 1.0.0
-description: MetaFW (Context-Sovereign) をグローバルスコープへ一括配置し、統治を開始する。
-tags: [setup, bootstrap, governance]
+description: MetaFW (Context-Sovereign) をグローバルスコープへ一括配置し、統治を開始するワークフロー。
+tags: [setup, bootstrap, governance, workflow]
 ---
 
-# Skill: Initialize Context Sovereign
+# Workflow: Initializing Context Sovereign (統治の初期化)
 
 ## Goal
 
-本リポジトリの内容を、Antigravityのグローバルスコープ（`~/.gemini/antigravity/`）の各ディレクトリ（rules, skills, global_workflows）に適切に配置し、エージェントが即座に「4つの美学」に基づいた自律統治を開始できるようにする。
+本リポジトリの内容を、Antigravityのグローバルスコープ（`~/.gemini/antigravity/`）の各ディレクトリ（rules, skills, global_workflows）に適切に配置し、エージェントが即座に「4つの美学」に基づいた自律統治を開始できるようにする手続き。
 
 ## Standard Procedures (一撃初期化手順)
 

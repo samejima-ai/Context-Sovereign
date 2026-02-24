@@ -26,8 +26,8 @@
 ### creating-rules.md / creating-skills.md / creating-workflows.md
 - **概要**: 各エージェント要素の設計・実装・検証の極意を定めた規法。
 
-### executing-agpl.md (螺旋解決プロセス)
-- **概要**: 目標完遂まで螺旋を回し、自律的に知見を言語化する解決の手順。
+### initializing-context-sovereign.md (初期化ワークフロー)
+- **概要**: 本リポジトリをグローバル環境へ一撃で展開し、魂（GEMINI.md）を宿らせるための起動プロセス。
 
 ---
 
