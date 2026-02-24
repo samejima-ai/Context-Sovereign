@@ -2,8 +2,8 @@
 
 > **"Aesthetics govern the Void; Context defines the Form."**
 
-## 🔱 The Foundation: Aesthetics
-- **[AESTHETICS.md](file:///C:/Users/Takehisa/.gemini/antigravity/brain/7b2a5336-e829-4b17-8f50-232b72026e31/AESTHETICS.md)**: 最上位憲章。自律・内省・解決・文脈の四魂。
+## 🔱 The Foundation: Aesthetics (Soul)
+- **[GEMINI.md](file:///C:/Users/Takehisa/.gemini/antigravity/GEMINI.md)**: 最上位憲章。エージェントが起動時に自動認識する「魂」の予約ファイル。自律・内省・解決・文脈の四魂を定義。
 
 ## 👑 Meta-Skills (MSK) - 統治の核
 エージェントの能力そのものを設計・実装・検証するための、MD純化された最上位指針。
