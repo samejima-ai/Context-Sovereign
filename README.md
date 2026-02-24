@@ -1,42 +1,34 @@
-# Antigravity Global Workflows
+# MetaFW MASTER_INDEX
 
-Antigravity（アングラ）環境で使用される、汎用的なメタワークフローおよび共通スキルの集合体です。
+> **"Aesthetics govern the Void; Context defines the Form."**
 
-## 📁 ディレクトリ構成
+## 🔱 The Foundation: Aesthetics
+- **[AESTHETICS.md](file:///C:/Users/Takehisa/.gemini/antigravity/brain/7b2a5336-e829-4b17-8f50-232b72026e31/AESTHETICS.md)**: 最上位憲章。自律・内省・解決・文脈の四魂。
 
-### 1. Workflows (`.gemini/antigravity/global_workflows/`)
+## 👑 Meta-Skills (MSK) - 統治の核
+エージェントの能力そのものを設計・実装・検証するための、MD純化された最上位指針。
 
-エージェントが特定の目的（コンポーネント生成、リサーチ、レビューなど）を完遂するための、動的な手順書を格納します。
+### Context Sovereign (コンテキスト・ソヴリン)
+- **所在**: `skills/context-sovereign/SKILL.md`
+- **役割**: システムの不整合を断じ、自律的なコンポーネント生成を命じる。
+- **哲学**: "Stop Mutation, Start Creation"
 
-- **`creating-agent-component.md`**: RL/SK/WF 生成の統括エントリーポイント
-- **`creating-rules.md`**: Rules (RL) 生成フロー
-- **`creating-skills.md`**: Skills (SK) 生成フロー
-- **`creating-workflows.md`**: Workflows (WF) 生成フロー
+### Agent Component Classifier (分類技師)
+- **所在**: `skills/agent-component-classifier/SKILL.md`
+- **役割**: ユーザーの要求を RL/SK/WF に論理的に分類する。
 
-### 2. Global Skills (`.gemini/antigravity/skills/`)
+## 🚀 Meta-Workflows (WF) - 統治の手順
+メタ・ソヴリンの意志を具現化し、自己進化を完遂するための動的な手順書。
 
-エージェントが特定の能力として自動認識し、`view_file` 等で直接参照可能な「道具」を格納します。
+### creating-agent-component.md (統括エントリーポイント)
+- **概要**: すべてのコンポーネント生成の起点。分析 → 分岐 → 実行。
 
-- **`agent-component-classifier/`**: ユーザー入力を分析し、最適な種別に分類する設計技師
+### creating-rules.md / creating-skills.md / creating-workflows.md
+- **概要**: 各エージェント要素の設計・実装・検証の極意を定めた規法。
 
-## ⚙️ セットアップ & ポータビリティ
-
-他のデバイスでこのスキルセットを有効にするには、以下のフォルダ構造に配置してください。
-
-```bash
-# Windows
-%USERPROFILE%\.gemini\antigravity\skills\               # Global Skills 配置先
-%USERPROFILE%\.gemini\antigravity\global_workflows/     # Meta-Workflows 配置先
-
-# Unix (macOS/Linux)
-~/.gemini/antigravity/skills/
-~/.gemini/antigravity/global_workflows/
-```
-
-## 🚀 使い方
-
-エージェントに対して「エージェントコンポーネントを作成して」などの関連するキーワードで依頼することで、自動的にこれらのグローバルワークフローがトリガーされます。
+### executing-agpl.md (螺旋解決プロセス)
+- **概要**: 目標完遂まで螺旋を回し、自律的に知見を言語化する解決の手順。
 
 ---
 
-© 2026 samejima-ai
+_Created by Context Sovereign Agent (Yamato-Damashii Protocol)_

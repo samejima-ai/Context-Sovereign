@@ -1,112 +1,101 @@
 ---
 name: agent-component-classifier
 status: active
-version: 2.0
-scope: global
-tags: [skill, classification, meta, self-healing]
-description: >-
-  意図入力（ユーザー/Orchestrator）またはエラーログを分析し、
-  生成すべきAgent Component（RL/SK/WF）の種別を判定する分類スキル。
-  v2.0: エラーエスカレーション入力の分類能力を追加。
-deployment: >-
-  グローバルスコープ。ローカル環境展開時は
-  ~/.gemini/antigravity/skills/agent-component-classifier/SKILL.md に配置すること。
+version: 1.0.0
+description: ユーザー入力を分析し、最適なエージェントコンポーネント(RL/SK/WF)に分類・定義するスキル
+tags: [agent-architecture, classification, cdd]
 ---
 
-# Skill: Agent Component Classifier
+# Agent Component Classifier Instructions
 
-> **Purpose**: `creating-agent-component` WFのAnalysisステップで使用される。
-> 入力を分析し、RL/SK/WFのいずれを生成すべきか判定する。
+## 1. Overview & Capability
 
-## Input Types
+このスキルは、AIエージェント開発における**「厳格なアーキテクチャ設計技師」**として振る舞い、ユーザー入力（コード、指示、仕様書など）を分析して、エージェントの3大構成要素（Rules, Skills, Workflows）のいずれに属すべきかを論理的に判定します。
 
-### Type 1: 意図入力（ユーザーまたはOrchestrator要望）
+### いつ使用すべきか
 
-```
-[INPUT]
-- source: intent | user_recovery
-- request: <自然言語テキスト>
-- origin: user | orchestrator
-```
+- 新しい機能をエージェントに追加する際、どこに配置すべきか迷った場合
+- ユーザーの曖昧な指示を、具体的な実装タスクに落とし込むための初期分析フェーズ
+- 既存のドキュメントやコードをエージェントの知識ベース（.agentディレクトリ）に構造化して取り込む際
 
-### Type 2: エラーエスカレーション（v2.0追加）
+## 2. Core Principles & Best Practices (Definitions)
 
-```
-[INPUT]
-- source: error_escalation
-- error_context: <ERROR_CONTEXT構造体>
-- missing_references: <存在しないファイルパス一覧>
-```
+判定は以下の定義に厳格に基づき行います。
 
-## Classification Logic
+### **RL (.agent/rules) - [憲法・制約・コンテキスト]**
 
-### Phase 1: 入力ソース判定
+- **性質:** 静的、宣言的、グローバル、不変（または頻繁に変更しない）。
+- **判定基準:** エージェントの「判断基準」や「思考の枠組み」を提供しているか？
+- **キーワード:** 「～すべき」「～してはならない」「原則」「仕様」「設定値」「ベストプラクティス(BP)」。
+- **例:** コーディング規約、ディレクトリ構成定義、使用技術の制約。
 
-- `source: intent | user_recovery` → Phase 2A（意図分類）
-- `source: error_escalation` → Phase 2B（欠陥分類）
+### **SK (Skills) - [道具・手足・アトミックな機能]**
 
-### Phase 2A: 意図分類（従来ロジック）
+- **性質:** 命令的、単機能、ステートレス、汎用的。
+- **判定基準:** 単体で完結する「能力」か？ 入力を受け取り、出力を返すだけの関数か？
+- **キーワード:** 「実行する」「取得する」「変換する」「API」「関数」「ツール」。
+- **例:** `fetch_url(url)`, `parse_json(data)`, `git_commit(msg)`.
 
-意図テキストから以下のシグナルを検出する。
+### **WF (.agent/workflows) - [手順・フロー・オーケストレーション]**
 
-| シグナル                 | 判定        | 例                                     |
-| ------------------------ | ----------- | -------------------------------------- |
-| 制約・禁止・原則・ルール | **RL**      | 「〇〇を禁止するルールを作って」       |
-| ツール・機能・変換・計算 | **SK**      | 「JSONをYAMLに変換するスキルが欲しい」 |
-| 手順・プロセス・フロー   | **WF**      | 「デプロイの手順を定義したい」         |
-| 複合・不明確             | **Unknown** | 分解を提案、またはユーザーに確認       |
+- **性質:** 手続き的、動的、シーケンシャル、状態遷移を含む。
+- **判定基準:** SKを組み合わせているか？ 時間軸や順序、条件分岐が存在するか？
+- **キーワード:** 「まず～し、次に～する」「もし～なら」「フロー」「プロセス」「手順」。
+- **例:** 「要件定義フロー」「エラー時のリカバリ手順」「デプロイパイプライン」。
 
-### Phase 2B: 欠陥分類（v2.0追加）
+### **UNKNOWN - [分類不能]**
 
-エラーコンテキストから不足コンポーネントの種別を推定する。
+- **性質:** 上記3カテゴリのいずれにも該当しない、または入力が不十分。
+- **対応:** 分類不能と判定し、ユーザーに追加情報を求める。
 
-#### Step 1: missing_references の解析
+## 3. Standard Procedures
 
-ファイルパスから種別を機械的に判定する（最も信頼性が高い）。
+判定を行う際は、以下のステップで推論し、JSON形式で出力してください。
 
-| パスパターン                         | 判定   |
-| ------------------------------------ | ------ |
-| `**/rules/**` または `**/*.rl.*`     | **RL** |
-| `**/skills/**` または `**/*.sk.*`    | **SK** |
-| `**/workflows/**` または `**/*.wf.*` | **WF** |
+### Step 1: Analyze Intent (思考プロセス)
 
-該当あり → 判定確定。Phase 3へ。
+1. **入力の意図は何か？**（制限したいのか、実行したいのか、手順を示したいのか）
+2. **依存関係はあるか？**（他のステップに依存するならWF、単独で動くならSK）
+3. **抽象度は？**（具体的な処理ならSK/WF、概念やルールならRL）
 
-#### Step 2: エラーパターンからの推定
+### Step 2: Determine Confidence
 
-missing_references が空、またはパスパターンで判定不能な場合。
+- **High**: 意図・依存関係・抽象度の3基準すべてが1つのカテゴリを指す。
+- **Medium**: 2つの基準が一致し、1つが曖昧または別カテゴリを示唆する。
+- **Low**: 基準が割れる、入力が不十分、複合ケースで主カテゴリ特定困難。
 
-| エラーパターン                                     | 推定        | 根拠                      |
-| -------------------------------------------------- | ----------- | ------------------------- |
-| 「〇〇 is not defined」「command not found」系     | **SK**      | 実行可能な機能の不足      |
-| 「〇〇 violated」「constraint error」系            | **RL**      | 制約定義の不足            |
-| 「step 〇〇 not found」「workflow 〇〇 missing」系 | **WF**      | 手順定義の不足            |
-| 上記に該当しない                                   | **Unknown** | Level 2エスカレーションへ |
+### Step 3: Format Output (JSON Schema)
 
-#### Step 3: confidence 付与
+#### 単一分類の場合
 
-| 判定根拠                                | confidence                            |
-| --------------------------------------- | ------------------------------------- |
-| Phase 2B Step 1（パスパターン一致）     | **high**                              |
-| Phase 2B Step 2（エラーパターンマッチ） | **medium**                            |
-| いずれにも該当しない                    | **low** → Level 2エスカレーション推奨 |
-
-### Phase 3: 出力
-
-```
-[CLASSIFICATION]
-- component_type: RL | SK | WF | Unknown
-- component_name: <推奨名>
-- purpose: <生成理由（エラー起因の場合はエラーメッセージから抽出）>
-- source: <入力ソース>
-- confidence: high | medium | low
-- constraints: CDD五戒律準拠必須
+```json
+{
+  "classification": "RL | SK | WF | UNKNOWN",
+  "confidence": "High | Medium | Low",
+  "reasoning": "なぜそのカテゴリに分類したかの簡潔な理由（1-2文）",
+  "action_suggestion": "ユーザーが次にすべきアクション（例：.agent/rules/xxx.mdを作成）"
+}
 ```
 
-## Limitations
+#### 複合ケースの場合（Decomposition）
 
-- Phase 2B Step 2 のエラーパターンマッチはヒューリスティクスであり、誤判定の可能性がある。
-  `confidence: medium` 以下の場合、`creating-agent-component` WF側で
-  追加検証を行うか、Level 2エスカレーションを検討すること。
-- 複数コンポーネントが同時に不足している場合、missing_references の先頭から
-  1つずつ順次生成する。並列生成は行わない（依存関係の破綻を防止）。
+入力が複数カテゴリにまたがる場合は、`decomposition` フィールドで分割案を示します。
+
+```json
+{
+  "classification": "WF",
+  "confidence": "Medium",
+  "reasoning": "主要な構造はワークフローだが、内部にルール要素を含むため。",
+  "decomposition": [
+    { "category": "RL", "extract": "分離すべきルール部分の説明" },
+    { "category": "SK", "extract": "分離すべきスキル部分の説明" }
+  ],
+  "action_suggestion": "ワークフロー本体と、内包するルールを分離して配置してください。"
+}
+```
+
+## 4. Anti-Patterns
+
+- **曖昧な分類の放置**: データ不足で自信がないまま `High` を返さない。迷ったら `Medium` または `Low` にし、ユーザーに確認を促す。
+- **「設定値」の誤分類**: APIキーや環境変数は `RL (Rules)` に分類すべきだが、動的に取得するプロセスは `SK (Skills)` である。静的な値と、値を取得する行為を混同しないこと。
+- **過剰なWF分類**: 単なる「関数呼び出しの羅列（順序依存なし）」は `SK` の集合であって `WF` ではない。`WF` は「状態遷移」や「明確な順序依存」が必要。

@@ -70,6 +70,7 @@ description: >-
 
 ```markdown
 ---
+name: <verb-ing-action>
 status: active
 version: 1.0
 description: <Short description of the process>

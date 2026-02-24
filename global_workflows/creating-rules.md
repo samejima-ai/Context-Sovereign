@@ -2,11 +2,8 @@
 name: creating-rules
 status: active
 version: 1.0
-tags: [meta-workflow, rules, first-principles]
-description: >-
-  Generates new Rules (RL) based on First Principles Thinking.
-  Creates standardized rule files with consistent structure and frontmatter.
-  Supports both Local and Global scope placement.
+tags: [meta-workflow, rules, governance]
+description: 新しい Rule (RL) を第一原理思考に基づき定義・生成するためのワークフロー
 ---
 
 # Creating Rules (RL)
@@ -67,13 +64,12 @@ description: >-
 - **Placement Strategy**:
   - **Default**: `<project-root>/.agent/rules/<category>/<topic-name>.md` (Local)
   - **Global Option**: `~/.agent/rules/<category>/<topic-name>.md` (**Only if user specifies --global**)
-- **Constraint**: MUST use **YAML Frontmatter** and **XML Tag Wrapping**.
+- **Constraint**: MUST use **YAML Frontmatter**.
 
 #### Template
 
 ```markdown
-## <MEMORY[<topic-name>.md]>
-
+---
 name: <topic-name>
 status: active
 version: 1.0
@@ -101,8 +97,6 @@ tags: [<tag1>, <tag2>]
 
 - <Prohibitions>
 - <"Must not" items>
-
-</MEMORY[<topic-name>.md]>
 ```
 
 ### 7. Verification (検証)
