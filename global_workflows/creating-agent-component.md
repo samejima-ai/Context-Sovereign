@@ -8,61 +8,38 @@ description: >-
   ユーザー入力を分析し、適切な生成プロセスへルーティングする。
 ---
 
-# Mega-Meta Workflow: Create Agent Component
+# Mega-Meta Workflow: Creating Agent Component (SlothForge-Powered)
 
-> **Purpose**: Single Entry Point for extending the Agent System.
-> **Logic**: Input -> Classify (RL/SK/WF) -> Route -> Execute
+> **Purpose**: Single Entry Point for extending the Agent System using SlothForge framework.
+> **Logic**: Request -> Analysis (Blueprint Generation) -> Forge (Deterministic Engine)
 
 ## Prerequisites
 
-- **Skill**: `agent_component_classifier` must be available (Local or Global).
-- **Workflows**: `creating-rules`, `creating-skills`, `creating-workflows` must be available.
+- **Frame**: `SlothForge` framework must be accessible at `slothforge/`.
+- **Protocol**: `slothforge-protocol.md` must be referenced for RS-Native design.
 
 ## Steps
 
-### 1. Analysis (分析)
+### 1. Analysis (設計と仕様化)
 
-- **Action**: Analyze the user's request using the classifier skill.
+- **Action**: 主の要求から、SlothForge が受理可能な `ForgeSpec` (JSON) を生成せよ。
+- **RS Policy**: 
+  - `slothforge-protocol` に則り、SK は Interface 定義に絞り、ロジックは `scripts/` へ逃がせ。
+  - **Environment Design**:
+    - **Global (`GEMINI`)**: 普遍的な原則、共通語彙 (Dictionary) のみに絞れ。技術スタック依存の記述を禁ず。
+    - **Local (`rules/*.md`)**: 具体的 ARC、SOP、スキーマ参照を記述せよ。ファイルは関心事ごとに細分化すること。
+  - RL の `trigger` は `model_decision` または `always_on` の正規化された文字列を厳密に使用せよ。
+  - **Global RL**: グローバルスコープの Rule は `name: "GEMINI"` とし、`GEMINI.md` として鍛造せよ。
+  - 出力は一切の解説を省き、純粋な JSON 形式にすること。
+
+### 2. Forge (鍛造実行)
+
+- **Action**: 生成した JSON を引数として、SlothForge エンジンを実行せよ。
 - **Command**:
   ```bash
-  # Analyze user input based on the classifier skill instructions
-  # Check the standard path for the agent-component-classifier skill
+  node slothforge/core/engine.js --spec='[ForgeSpec_JSON]'
   ```
-- **Manual Decision**:
-  - Is it a **Rule (RL)**? (Constraint, Principle)
-  - Is it a **Skill (SK)**? (Tool, Function)
-  - Is it a **Workflow (WF)**? (Process, Procedure)
 
-### 2. Routing (分岐)
+### 3. Verification
 
-Based on the classification result, proceed to the corresponding workflow.
-
-#### Case A: Rules (RL)
-
-- **Target**: `creating-rules`
-- **Action**: Switch context to the Rules creation workflow.
-
-#### Case B: Skills (SK)
-
-- **Target**: `creating-skills`
-- **Action**: Switch context to the Skills creation workflow.
-
-#### Case C: Workflows (WF)
-
-- **Target**: `creating-workflows`
-- **Action**: Switch context to the Workflows creation workflow.
-
-#### Case D: Unknown / Mixed
-
-- **Action**: Ask user for clarification or decompose the request.
-
-### 3. Execution (実行)
-
-- Follow the steps in the selected workflow to complete the component creation.
-- Ensure `MASTER_INDEX.md` is updated at the end.
-
-## Verification
-
-- [ ] Did the classifier correctly identify the intent?
-- [ ] Was the correct sub-workflow triggered?
-- [ ] Was the component created in the correct directory (Local vs Global)?
+- **Action**: 生成されたファイルのディレクトリ構造と、RS 教義への適合性を確認せよ。
